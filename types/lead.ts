@@ -1,0 +1,21 @@
+export type Lead = {
+  id: string;
+  name: string;
+  category?: string;
+  rating?: number;
+  reviews?: number;
+  phone?: string;
+  website?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+  latitude?: number;
+  longitude?: number;
+  hours?: string;
+  verified?: boolean;
+  notes?: string;
+  scrapedAt?: string;
+};

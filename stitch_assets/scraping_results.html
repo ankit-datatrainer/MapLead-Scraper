@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MapLead Scraper - Results Library</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#adc6ff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "on-primary-fixed-variant": "#004395",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "primary-container": "#2170e4",
+                    "outline": "#727785",
+                    "secondary-container": "#6cf8bb",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006c49",
+                    "surface-bright": "#f8f9ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-surface-variant": "#424754",
+                    "on-secondary-fixed-variant": "#005236",
+                    "primary": "#0058be",
+                    "text-main": "#212226",
+                    "surface-tint": "#005ac2",
+                    "on-surface": "#0b1c30",
+                    "primary-fixed": "#d8e2ff",
+                    "inverse-surface": "#213145",
+                    "on-primary-container": "#fefcff",
+                    "on-primary-fixed": "#001a42",
+                    "secondary-fixed-dim": "#4edea3",
+                    "dark-surface": "#1E293B",
+                    "surface-primary": "#FFFFFF",
+                    "on-tertiary-container": "#fffbff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#311400",
+                    "tertiary": "#924700",
+                    "dark-bg": "#0F172A",
+                    "on-secondary-fixed": "#002113",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-secondary-container": "#00714d",
+                    "outline-variant": "#c2c6d6",
+                    "surface-variant": "#d3e4fe",
+                    "surface-secondary": "#F9F9FC",
+                    "background": "#f8f9ff",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "surface-container": "#e5eeff",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#ffdcc6",
+                    "surface-dim": "#cbdbf5",
+                    "border-subtle": "#E2E8F0",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#b75b00",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-fixed": "#6ffbbe",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#eff4ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "gutter-desktop": "24px",
+                    "margin-desktop": "40px",
+                    "gutter-mobile": "16px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-mono": ["IBM Plex Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar for inner panels */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: theme('colors.outline-variant');
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md h-screen w-full overflow-hidden flex">
+<!-- SideNavBar (Shared Component JSON) -->
+<nav class="fixed left-0 top-0 h-full w-[280px] hidden lg:flex flex-col border-r border-border-subtle dark:border-outline-variant bg-surface-secondary dark:bg-dark-bg z-40">
+<!-- Header -->
+<div class="p-6 pb-2 border-b border-border-subtle dark:border-outline-variant flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</div>
+<div>
+<h1 class="font-headline-md text-[18px] leading-tight font-bold text-primary dark:text-inverse-primary">MapLead Scraper</h1>
+<p class="font-body-sm text-[12px] text-on-surface-variant dark:text-outline-variant">Pro Plan</p>
+</div>
+</div>
+<!-- CTA -->
+<div class="px-6 py-4">
+<button class="w-full py-2 bg-primary text-on-primary font-body-sm text-body-sm font-semibold rounded-lg hover:bg-surface-tint transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                Start Scraping
+            </button>
+</div>
+<!-- Main Nav Links -->
+<div class="flex flex-col px-4 py-2 gap-y-1 flex-grow">
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-inverse-surface hover:text-primary dark:hover:text-inverse-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-sm text-body-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-inverse-surface hover:text-primary dark:hover:text-inverse-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span class="font-body-sm text-body-sm font-medium">New Scrape</span>
+</a>
+<!-- Active -->
+<a class="flex items-center gap-3 px-4 py-2.5 bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-lg font-semibold transition-all duration-200 scale-[1.02] shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px] icon-fill">inventory_2</span>
+<span class="font-body-sm text-body-sm">Results Library</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-inverse-surface hover:text-primary dark:hover:text-inverse-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">star</span>
+<span class="font-body-sm text-body-sm font-medium">Saved Searches</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-inverse-surface hover:text-primary dark:hover:text-inverse-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+<span class="font-body-sm text-body-sm font-medium">API Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-inverse-surface hover:text-primary dark:hover:text-inverse-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="font-body-sm text-body-sm font-medium">Billing</span>
+</a>
+</div>
+<!-- Footer Nav -->
+<div class="px-4 py-6 border-t border-border-subtle dark:border-outline-variant flex flex-col gap-y-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-body-sm text-body-sm font-medium">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-body-sm text-body-sm font-medium">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Workspace Area -->
+<main class="ml-0 lg:ml-[280px] flex-1 flex h-full overflow-hidden relative">
+<!-- Left Panel: Filters & Actions -->
+<aside class="w-[280px] h-full flex flex-col border-r border-border-subtle bg-surface-primary shrink-0 hidden md:flex z-10">
+<div class="p-6 border-b border-border-subtle flex items-center justify-between">
+<h2 class="font-headline-md text-[18px] font-semibold text-on-surface">Filters</h2>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 flex flex-col gap-6">
+<!-- Active Filters -->
+<div>
+<h3 class="font-label-mono text-label-mono text-outline mb-3 uppercase tracking-wider">Active Criteria</h3>
+<div class="flex flex-wrap gap-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low border border-border-subtle rounded-full font-body-sm text-[13px] text-on-surface">
+<span>Coffee Shops</span>
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error transition-colors">close</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low border border-border-subtle rounded-full font-body-sm text-[13px] text-on-surface">
+<span>Rating &gt; 4.5</span>
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error transition-colors">close</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low border border-border-subtle rounded-full font-body-sm text-[13px] text-on-surface">
+<span>Has Website</span>
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error transition-colors">close</span>
+</div>
+</div>
+<button class="mt-4 w-full py-2 border border-border-subtle rounded-lg text-primary font-body-sm text-body-sm font-medium hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+                        Modify Filters
+                    </button>
+</div>
+<hr class="border-border-subtle"/>
+<!-- Export Options -->
+<div>
+<h3 class="font-label-mono text-label-mono text-outline mb-3 uppercase tracking-wider">Export Results</h3>
+<div class="flex flex-col gap-2">
+<button class="w-full py-2 bg-surface-primary border border-border-subtle rounded-lg text-on-surface font-body-sm text-body-sm hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">table_view</span>
+                            Export to CSV
+                        </button>
+<button class="w-full py-2 bg-surface-primary border border-border-subtle rounded-lg text-on-surface font-body-sm text-body-sm hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">grid_on</span>
+                            Export to Excel
+                        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Actions -->
+<div class="p-6 border-t border-border-subtle bg-surface-secondary mt-auto">
+<button class="w-full py-2.5 bg-primary text-on-primary font-body-md text-[14px] font-semibold rounded-lg hover:bg-surface-tint transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+                    Save Search
+                </button>
+</div>
+</aside>
+<!-- Center Panel: Interactive Map -->
+<section class="flex-1 relative bg-surface-dim overflow-hidden flex flex-col z-0">
+<!-- Mock Map Area (using styling and a placeholder image strategy as requested) -->
+<div class="absolute inset-0 bg-[#e5e3df]">
+<!-- Simulating a map background pattern -->
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, #0b1c30 1px, transparent 1px); background-size: 20px 20px;"></div>
+<!-- Map UI Elements Overlay -->
+<div class="absolute top-6 left-6 z-10 flex gap-2">
+<div class="bg-surface-primary px-4 py-2 rounded-lg shadow-sm border border-border-subtle flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">my_location</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Seattle, WA</span>
+</div>
+<div class="bg-surface-primary px-3 py-2 rounded-lg shadow-sm border border-border-subtle flex items-center gap-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">248 Results</span>
+</div>
+</div>
+<!-- Zoom Controls -->
+<div class="absolute bottom-6 right-6 z-10 flex flex-col shadow-sm rounded-lg border border-border-subtle overflow-hidden bg-surface-primary">
+<button class="p-2 hover:bg-surface-container-low text-on-surface transition-colors border-b border-border-subtle">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low text-on-surface transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<!-- Map Pins (Mock Data) -->
+<!-- Active Pin -->
+<div class="absolute top-[40%] left-[50%] transform -translate-x-1/2 -translate-y-full flex flex-col items-center cursor-pointer group">
+<div class="bg-surface-primary px-2 py-1 rounded shadow text-[10px] font-bold text-on-surface opacity-0 group-hover:opacity-100 transition-opacity mb-1 whitespace-nowrap border border-border-subtle">
+                        Artisan Roasters
+                    </div>
+<span class="material-symbols-outlined text-secondary icon-fill text-[36px] drop-shadow-md">location_on</span>
+</div>
+<!-- Pending/Inactive Pins -->
+<div class="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-full cursor-pointer hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-outline text-[28px]">location_on</span>
+</div>
+<div class="absolute top-[55%] left-[45%] transform -translate-x-1/2 -translate-y-full cursor-pointer hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary icon-fill text-[28px]">location_on</span>
+</div>
+<div class="absolute top-[48%] left-[65%] transform -translate-x-1/2 -translate-y-full cursor-pointer hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-outline text-[28px]">location_on</span>
+</div>
+</div>
+</section>
+<!-- Right Panel: Results List -->
+<aside class="w-full md:w-[380px] h-full flex flex-col border-l border-border-subtle bg-surface-primary shrink-0 z-10 shadow-[-4px_0_15px_rgba(0,0,0,0.03)] relative">
+<div class="p-4 border-b border-border-subtle flex items-center justify-between bg-surface-secondary">
+<h2 class="font-headline-md text-[18px] font-semibold text-on-surface">Data List</h2>
+<div class="flex items-center gap-2">
+<span class="font-body-sm text-[12px] text-outline">Sort by:</span>
+<select class="bg-surface-primary border-none text-body-sm font-medium text-primary py-1 px-2 rounded cursor-pointer focus:ring-0">
+<option>Relevance</option>
+<option>Rating (High to Low)</option>
+<option>Reviews (Most)</option>
+</select>
+</div>
+</div>
+<!-- List Scroll Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
+<!-- Result Card 1 (Active/Selected state mock) -->
+<div class="p-5 border-b border-border-subtle bg-surface-container-low border-l-4 border-l-primary cursor-pointer hover:bg-surface-container transition-colors" onclick="openDrawer()">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md-mobile text-[16px] font-bold text-on-surface leading-tight">Artisan Roasters</h3>
+<div class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[11px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] icon-fill">star</span> 4.8
+                        </div>
+</div>
+<p class="font-body-sm text-[13px] text-on-surface-variant mb-3 flex items-start gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">map</span>
+                        1204 Coffee Ln, Seattle, WA 98101
+                    </p>
+<div class="flex flex-wrap gap-3 mt-3">
+<div class="flex items-center gap-1 font-body-sm text-[12px] text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">call</span> (206) 555-0192
+                        </div>
+<div class="flex items-center gap-1 font-body-sm text-[12px] text-primary hover:underline">
+<span class="material-symbols-outlined text-[14px]">language</span> artisanroasts.com
+                        </div>
+</div>
+</div>
+<!-- Result Card 2 -->
+<div class="p-5 border-b border-border-subtle bg-surface-primary border-l-4 border-l-transparent cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md-mobile text-[16px] font-bold text-on-surface leading-tight">Espresso Works</h3>
+<div class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded text-[11px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] icon-fill">star</span> 4.2
+                        </div>
+</div>
+<p class="font-body-sm text-[13px] text-on-surface-variant mb-3 flex items-start gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">map</span>
+                        88 Beans Ave, Seattle, WA 98104
+                    </p>
+<div class="flex flex-wrap gap-3 mt-3">
+<div class="flex items-center gap-1 font-body-sm text-[12px] text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">call</span> (206) 555-8831
+                        </div>
+<div class="flex items-center gap-1 font-body-sm text-[12px] text-primary hover:underline">
+<span class="material-symbols-outlined text-[14px]">language</span> espressoworks.net
+                        </div>
+</div>
+</div>
+<!-- Result Card 3 -->
+<div class="p-5 border-b border-border-subtle bg-surface-primary border-l-4 border-l-transparent cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md-mobile text-[16px] font-bold text-on-surface leading-tight">The Daily Grind</h3>
+<div class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded text-[11px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] icon-fill">star</span> 3.9
+                        </div>
+</div>
+<p class="font-body-sm text-[13px] text-on-surface-variant mb-3 flex items-start gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">map</span>
+                        400 Main St, Seattle, WA 98104
+                    </p>
+<div class="flex flex-wrap gap-3 mt-3">
+<div class="flex items-center gap-1 font-body-sm text-[12px] text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">call</span> (206) 555-1122
+                        </div>
+<div class="flex items-center gap-1 font-body-sm text-[12px] text-primary hover:underline">
+<span class="material-symbols-outlined text-[14px]">language</span> dailygrindsea.com
+                        </div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Side Drawer: Detail View (Hidden by default, overlays right panel) -->
+<div class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-surface-primary shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-l border-border-subtle" id="detail-drawer">
+<!-- Drawer Header Actions -->
+<div class="absolute top-4 right-4 z-10 flex gap-2">
+<button class="w-8 h-8 rounded-full bg-surface-primary/80 backdrop-blur border border-border-subtle flex items-center justify-center text-on-surface hover:bg-surface-container shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-primary/80 backdrop-blur border border-border-subtle flex items-center justify-center text-on-surface hover:bg-surface-container shadow-sm transition-colors" onclick="closeDrawer()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Drawer Content Scroll Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Hero Placeholder (Solid color with subtle pattern for clean aesthetic) -->
+<div class="h-[200px] w-full bg-surface-container relative" data-alt="A high-quality, professional photograph of a modern restaurant interior. The scene features sleek wooden tables, minimalist chairs, and warm, ambient lighting from pendant lamps hanging above. The color palette is composed of natural earth tones, warm whites, and subtle accents of greenery from potted plants. The mood is inviting, sophisticated, and clean, aligning with a premium corporate aesthetic. The depth of field is shallow, focusing on a beautifully set table in the foreground while the background gently blurs.">
+<!-- Assuming placeholder image injection or standard styling here -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-primary to-transparent"></div>
+</div>
+<div class="p-6 -mt-10 relative z-10">
+<div class="bg-surface-primary rounded-lg p-5 shadow-sm border border-border-subtle">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-md text-[24px] font-bold text-on-surface">Artisan Roasters</h2>
+<div class="flex flex-col items-end">
+<div class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[14px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] icon-fill">star</span> 4.8
+                                </div>
+<span class="text-[11px] text-outline mt-1 font-medium">1,240 Reviews</span>
+</div>
+</div>
+<p class="font-body-sm text-[14px] text-on-surface-variant flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[18px] text-outline">map</span>
+                            1204 Coffee Ln, Seattle, WA 98101
+                        </p>
+</div>
+<!-- Details Grid -->
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="p-4 rounded-lg bg-surface-secondary border border-border-subtle">
+<span class="block text-[11px] font-label-mono text-outline uppercase mb-1">Phone</span>
+<span class="font-body-sm text-on-surface font-medium">(206) 555-0192</span>
+</div>
+<div class="p-4 rounded-lg bg-surface-secondary border border-border-subtle">
+<span class="block text-[11px] font-label-mono text-outline uppercase mb-1">Website</span>
+<a class="font-body-sm text-primary font-medium hover:underline truncate block" href="#">artisanroasts.com</a>
+</div>
+<div class="p-4 rounded-lg bg-surface-secondary border border-border-subtle col-span-2">
+<span class="block text-[11px] font-label-mono text-outline uppercase mb-1">Business Hours</span>
+<div class="flex justify-between font-body-sm text-[13px] mt-1 text-on-surface">
+<span>Mon - Fri</span>
+<span class="font-medium text-secondary">Open (7AM - 6PM)</span>
+</div>
+</div>
+</div>
+<!-- Gallery Section -->
+<div class="mt-8">
+<h3 class="font-headline-md-mobile text-[16px] font-bold text-on-surface mb-4">Gallery</h3>
+<div class="grid grid-cols-3 gap-2">
+<div class="aspect-square bg-surface-container rounded border border-border-subtle" data-alt="Close up photography of a professional espresso machine pouring a perfect shot of espresso into a white ceramic cup. The lighting highlights the rich crema and the polished metal of the machine. Clean, bright, and focused, emphasizing precision and quality."></div>
+<div class="aspect-square bg-surface-container rounded border border-border-subtle" data-alt="A wide shot of a modern bakery display case filled with artisanal pastries. Soft, warm directional lighting illuminates the food. The surrounding environment is minimal, featuring smooth white countertops and subtle gray background textures."></div>
+<div class="aspect-square bg-surface-container rounded border border-border-subtle flex items-center justify-center cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="font-body-sm text-[12px] font-medium text-primary">+12 Photos</span>
+</div>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="mt-8">
+<h3 class="font-headline-md-mobile text-[16px] font-bold text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-outline">edit_note</span>
+                            Internal Notes
+                        </h3>
+<textarea class="w-full h-24 p-3 rounded-lg bg-surface-secondary border border-border-subtle text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none" placeholder="Add custom notes about this lead..."></textarea>
+<button class="mt-2 px-4 py-1.5 bg-surface-primary border border-border-subtle rounded text-primary font-body-sm text-[13px] font-medium hover:bg-surface-container-low transition-colors ml-auto block">Save Note</button>
+</div>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="p-4 border-t border-border-subtle bg-surface-primary flex gap-3">
+<button class="flex-1 py-2.5 bg-surface-primary border border-primary text-primary font-body-sm font-semibold rounded-lg hover:bg-surface-container-low transition-colors">
+                    Add to Campaign
+                </button>
+<button class="flex-1 py-2.5 bg-primary text-on-primary font-body-sm font-semibold rounded-lg hover:bg-surface-tint transition-colors">
+                    Export Contact
+                </button>
+</div>
+</div>
+</main>
+<!-- Lightweight JS for Drawer Interaction -->
+<script>
+        function openDrawer() {
+            const drawer = document.getElementById('detail-drawer');
+            drawer.classList.remove('translate-x-full');
+            drawer.classList.add('translate-x-0');
+        }
+
+        function closeDrawer() {
+            const drawer = document.getElementById('detail-drawer');
+            drawer.classList.remove('translate-x-0');
+            drawer.classList.add('translate-x-full');
+        }
+    </script>
+</body></html>

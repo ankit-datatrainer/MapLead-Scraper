@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MapLead Scraper - New Scrape</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#adc6ff",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#0b1c30",
+                      "on-primary-fixed-variant": "#004395",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#dce9ff",
+                      "tertiary-fixed-dim": "#ffb786",
+                      "primary-container": "#2170e4",
+                      "outline": "#727785",
+                      "secondary-container": "#6cf8bb",
+                      "on-primary": "#ffffff",
+                      "secondary": "#006c49",
+                      "surface-bright": "#f8f9ff",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-surface-variant": "#424754",
+                      "on-secondary-fixed-variant": "#005236",
+                      "primary": "#0058be",
+                      "text-main": "#212226",
+                      "surface-tint": "#005ac2",
+                      "on-surface": "#0b1c30",
+                      "primary-fixed": "#d8e2ff",
+                      "inverse-surface": "#213145",
+                      "on-primary-container": "#fefcff",
+                      "on-primary-fixed": "#001a42",
+                      "secondary-fixed-dim": "#4edea3",
+                      "dark-surface": "#1E293B",
+                      "surface-primary": "#FFFFFF",
+                      "on-tertiary-container": "#fffbff",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#311400",
+                      "tertiary": "#924700",
+                      "dark-bg": "#0F172A",
+                      "on-secondary-fixed": "#002113",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-container": "#00714d",
+                      "outline-variant": "#c2c6d6",
+                      "surface-variant": "#d3e4fe",
+                      "surface-secondary": "#F9F9FC",
+                      "background": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#723600",
+                      "surface-container": "#e5eeff",
+                      "surface": "#f8f9ff",
+                      "tertiary-fixed": "#ffdcc6",
+                      "surface-dim": "#cbdbf5",
+                      "border-subtle": "#E2E8F0",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#b75b00",
+                      "inverse-on-surface": "#eaf1ff",
+                      "secondary-fixed": "#6ffbbe",
+                      "error": "#ba1a1a",
+                      "on-secondary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#eff4ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "gutter-desktop": "24px",
+                      "margin-desktop": "40px",
+                      "gutter-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "label-mono": ["IBM Plex Mono"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-transition {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar (from JSON) -->
+<nav class="fixed left-0 top-0 h-full w-[280px] hidden lg:flex flex-col border-r border-border-subtle bg-surface-secondary dark:bg-dark-bg z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">MapLead</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Pro Plan</div>
+</div>
+</div>
+<div class="px-4 mt-2">
+<button class="w-full bg-primary text-on-primary font-body-md text-body-md py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                Start Scraping
+            </button>
+</div>
+<div class="flex flex-col p-6 gap-y-2 mt-4 flex-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-sm text-body-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-lg font-semibold scale-105 transition-transform shadow-sm" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-body-sm text-body-sm">New Scrape</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-sm text-body-sm font-medium">Results Library</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">star</span>
+<span class="font-body-sm text-body-sm font-medium">Saved Searches</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">vpn_key</span>
+<span class="font-body-sm text-body-sm font-medium">API Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-sm text-body-sm font-medium">Billing</span>
+</a>
+</div>
+<div class="p-6 border-t border-border-subtle mt-auto flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-sm text-body-sm font-medium">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-sm text-body-sm font-medium">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 lg:ml-[280px] flex flex-col min-w-0 h-full relative">
+<!-- TopNavBar (from JSON) -->
+<header class="flex justify-between items-center h-16 px-margin-desktop w-full border-b border-border-subtle shadow-sm bg-surface-primary bg-opacity-90 backdrop-blur-md sticky top-0 z-40">
+<div class="lg:hidden font-headline-md text-headline-md font-bold text-primary">MapLead</div>
+<div class="hidden lg:block text-on-surface-variant font-body-sm text-body-sm">
+<!-- Search bar placeholder on left -->
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full bg-surface-secondary border-none rounded-full pl-9 pr-4 py-1.5 text-body-sm focus:ring-1 focus:ring-primary outline-none text-on-surface" placeholder="Quick search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary font-body-sm text-body-sm font-medium hover:bg-surface-container-low px-3 py-1.5 rounded-lg transition-colors">Upgrade</button>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200 hidden sm:block"><span class="material-symbols-outlined">help</span></button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200"><span class="material-symbols-outlined">settings</span></button>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm cursor-pointer ml-2">
+                    JD
+                </div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-6 md:p-10 pb-32">
+<div class="max-w-4xl mx-auto">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-background mb-2">Create New Task</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure parameters to extract high-quality business leads.</p>
+</div>
+<!-- Progress Stepper -->
+<div class="mb-8 relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-border-subtle -translate-y-1/2 z-0 rounded-full"></div>
+<div class="absolute top-1/2 left-0 w-1/4 h-0.5 bg-primary -translate-y-1/2 z-0 transition-all duration-500" id="progress-bar"></div>
+<div class="relative z-10 flex justify-between">
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-sm ring-4 ring-surface" id="indicator-1">1</div>
+<span class="font-label-mono text-label-mono text-primary font-bold">Target</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-primary border border-border-subtle text-on-surface-variant flex items-center justify-center font-bold text-sm ring-4 ring-surface" id="indicator-2">2</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Filters</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-primary border border-border-subtle text-on-surface-variant flex items-center justify-center font-bold text-sm ring-4 ring-surface" id="indicator-3">3</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Settings</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-primary border border-border-subtle text-on-surface-variant flex items-center justify-center font-bold text-sm ring-4 ring-surface" id="indicator-4">4</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Launch</span>
+</div>
+</div>
+</div>
+<!-- Form Container -->
+<div class="bg-surface-primary rounded-xl border border-border-subtle shadow-sm p-6 md:p-8 min-h-[500px] relative overflow-hidden">
+<!-- STEP 1: Target Location & Query -->
+<div class="step-transition block" id="step-1">
+<h2 class="font-headline-md text-headline-md text-on-background mb-6">Target Parameters</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Inputs -->
+<div class="flex flex-col gap-5">
+<div>
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-1.5">Search Query / Keywords</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-primary border border-border-subtle rounded-lg pl-10 pr-4 py-2.5 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow" placeholder="e.g. Italian Restaurants, Plumbers" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-1.5">Location</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<input class="w-full bg-surface-primary border border-border-subtle rounded-lg pl-10 pr-4 py-2.5 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow" placeholder="City, State, or Zip" type="text" value="San Francisco, CA"/>
+</div>
+</div>
+<div>
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-1.5">Category (Optional)</label>
+<div class="relative">
+<select class="w-full bg-surface-primary border border-border-subtle rounded-lg px-4 py-2.5 text-body-md text-on-surface appearance-none focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>All Categories</option>
+<option>Food &amp; Dining</option>
+<option>Home Services</option>
+<option>Health &amp; Medical</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="pt-2">
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-label-mono text-label-mono text-outline uppercase">Search Radius</label>
+<span class="font-body-sm text-body-sm text-primary font-medium">10 Miles</span>
+</div>
+<input class="w-full h-1.5 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" max="50" min="1" type="range" value="10"/>
+</div>
+</div>
+<!-- Map Preview -->
+<div class="flex flex-col">
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-1.5">Extraction Area Preview</label>
+<div class="flex-1 bg-surface-secondary border border-border-subtle rounded-lg overflow-hidden relative min-h-[240px]">
+<img alt="Map Preview" class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A clean, minimalist vector-style map representation of San Francisco city blocks viewed from directly above. The map uses a very light gray and white color palette to match a modern light-mode UI aesthetic, with subtle blue geometric shapes indicating specific urban zones or search radiuses. The lighting is flat and graphic, creating a precise, data-driven mood perfect for a software dashboard. No text or labels are visible, focusing purely on structural geometry." data-location="San Francisco map view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdcFIAIykwqktyBX-57SnYtCu_Fahy07_tmLK8Ga9FLaprI-NUrYFxxOqKPH5MNkpmt17UzYObJBHBp3oxnzPkl02fRGLlvhhbvWFoI0Tz9j84exhZAjrVnZT3_ANDPd-EDO4UJiaRA4J6M9TOxu98r8lg85SJvcbN4_xf0enchTaT1n4OLpDotZzrLfDPKvQkBqgOZ9L_s9-8xltsbIqlJ-E1a2aa0VC68Vvuhfx22oP8bapfHxW7hSKtYJNx4WX6gm3Ro_Lh8B9i"/>
+<div class="absolute inset-0 bg-primary/5 border-2 border-primary/20 rounded-full w-3/4 h-3/4 m-auto transform -translate-y-2 pointer-events-none flex items-center justify-center">
+<div class="w-3 h-3 bg-primary rounded-full shadow-[0_0_0_4px_rgba(33,112,228,0.3)]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- STEP 2: Advanced Filters (Hidden initially) -->
+<div class="step-transition hidden" id="step-2">
+<h2 class="font-headline-md text-headline-md text-on-background mb-6">Advanced Filters</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Refine your dataset to ensure high-quality leads.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="flex items-center justify-between p-4 border border-border-subtle rounded-lg bg-surface-primary hover:bg-surface transition-colors cursor-pointer">
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Must Have Phone Number</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Exclude listings without contact info</div>
+</div>
+<div class="w-10 h-5 bg-primary rounded-full relative shadow-inner">
+<div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 border border-border-subtle rounded-lg bg-surface-primary hover:bg-surface transition-colors cursor-pointer">
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Must Have Website</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Exclude listings without URLs</div>
+</div>
+<div class="w-10 h-5 bg-surface-container-high rounded-full relative shadow-inner">
+<div class="w-4 h-4 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm border border-border-subtle"></div>
+</div>
+</div>
+<div class="p-4 border border-border-subtle rounded-lg">
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-2">Minimum Rating</label>
+<div class="flex gap-2">
+<button class="flex-1 py-1.5 border border-border-subtle rounded text-body-sm text-on-surface-variant hover:bg-surface">Any</button>
+<button class="flex-1 py-1.5 border border-border-subtle rounded text-body-sm text-on-surface-variant hover:bg-surface">3.0+</button>
+<button class="flex-1 py-1.5 border border-primary bg-primary-container text-on-primary-container font-medium rounded text-body-sm">4.0+</button>
+</div>
+</div>
+<div class="p-4 border border-border-subtle rounded-lg">
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-2">Minimum Reviews</label>
+<input class="w-full bg-surface-primary border border-border-subtle rounded-lg px-3 py-2 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. 10" type="number" value="50"/>
+</div>
+</div>
+</div>
+<!-- STEP 3: API Settings -->
+<div class="step-transition hidden" id="step-3">
+<h2 class="font-headline-md text-headline-md text-on-background mb-6">Extraction Settings</h2>
+<div class="max-w-xl">
+<div class="mb-6">
+<label class="block font-label-mono text-label-mono text-outline uppercase mb-1.5">Apify API Token</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">key</span>
+<input class="w-full bg-surface-primary border border-border-subtle rounded-lg pl-10 pr-10 py-2.5 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-mono" type="password" value="apify_api_token_xxxxxxxxxxxx"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline cursor-pointer hover:text-primary">visibility</span>
+</div>
+<p class="mt-2 font-body-sm text-body-sm text-on-surface-variant">Your token is encrypted and only used for execution.</p>
+</div>
+<div class="mb-6 p-4 bg-surface-container-low border border-primary-fixed rounded-lg flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface mb-1">Max Results Limit</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Set a hard cap to control your compute costs.</p>
+<input class="w-32 bg-surface-primary border border-border-subtle rounded-lg px-3 py-1.5 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="number" value="1000"/>
+</div>
+</div>
+</div>
+</div>
+<!-- STEP 4: Review & Start -->
+<div class="step-transition hidden text-center py-8" id="step-4">
+<div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-background mb-2">Ready to Extract</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-md mx-auto">Review your parameters before launching the scraper task.</p>
+<div class="flex flex-wrap justify-center gap-2 mb-10 max-w-2xl mx-auto">
+<span class="px-3 py-1.5 bg-surface border border-border-subtle rounded-full font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">search</span> Plumbers</span>
+<span class="px-3 py-1.5 bg-surface border border-border-subtle rounded-full font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> San Francisco, CA</span>
+<span class="px-3 py-1.5 bg-surface border border-border-subtle rounded-full font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">radar</span> 10 Miles</span>
+<span class="px-3 py-1.5 bg-primary-container text-on-primary-container border border-primary-fixed rounded-full font-body-sm text-body-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">star</span> 4.0+ Rating</span>
+<span class="px-3 py-1.5 bg-surface border border-border-subtle rounded-full font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">call</span> Has Phone</span>
+<span class="px-3 py-1.5 bg-surface border border-border-subtle rounded-full font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">speed</span> Max: 1000</span>
+</div>
+<button class="bg-secondary text-on-secondary hover:bg-on-secondary-fixed-variant transition-colors font-headline-md text-headline-md py-4 px-12 rounded-xl shadow-sm flex items-center justify-center gap-3 mx-auto active:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Start Scraping
+                        </button>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex justify-between items-center mt-6">
+<button class="px-6 py-2 border border-border-subtle rounded-lg text-on-surface-variant font-medium hover:bg-surface-primary transition-colors opacity-0 pointer-events-none" id="btn-back" onclick="changeStep(-1)">Back</button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2" id="btn-next" onclick="changeStep(1)">
+                        Next Step
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function updateUI() {
+            // Update step content visibility
+            for (let i = 1; i <= totalSteps; i++) {
+                const el = document.getElementById(`step-${i}`);
+                if (i === currentStep) {
+                    el.classList.remove('hidden');
+                    setTimeout(() => el.classList.remove('opacity-0', 'translate-y-4'), 50);
+                } else {
+                    el.classList.add('hidden', 'opacity-0', 'translate-y-4');
+                }
+            }
+
+            // Update Progress Bar
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            // Update Indicators
+            for (let i = 1; i <= totalSteps; i++) {
+                const ind = document.getElementById(`indicator-${i}`);
+                const label = ind.nextElementSibling;
+                if (i <= currentStep) {
+                    ind.className = 'w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-sm ring-4 ring-surface transition-colors duration-300';
+                    label.classList.replace('text-on-surface-variant', 'text-primary');
+                    label.classList.add('font-bold');
+                } else {
+                    ind.className = 'w-8 h-8 rounded-full bg-surface-primary border border-border-subtle text-on-surface-variant flex items-center justify-center font-bold text-sm ring-4 ring-surface transition-colors duration-300';
+                    label.classList.replace('text-primary', 'text-on-surface-variant');
+                    label.classList.remove('font-bold');
+                }
+            }
+
+            // Update Buttons
+            const btnBack = document.getElementById('btn-back');
+            const btnNext = document.getElementById('btn-next');
+
+            if (currentStep === 1) {
+                btnBack.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                btnBack.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            if (currentStep === totalSteps) {
+                btnNext.classList.add('hidden');
+            } else {
+                btnNext.classList.remove('hidden');
+            }
+        }
+
+        function changeStep(dir) {
+            if (currentStep + dir >= 1 && currentStep + dir <= totalSteps) {
+                currentStep += dir;
+                updateUI();
+            }
+        }
+
+        // Init
+        document.querySelectorAll('.step-transition').forEach(el => el.classList.add('opacity-0', 'translate-y-4'));
+        updateUI();
+    </script>
+</body></html>
