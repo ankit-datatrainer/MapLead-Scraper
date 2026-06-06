@@ -1,0 +1,13 @@
+.env.local
+.env.local.example
+.git
+.gitignore
+README.md
+.next
+node_modules
+npm-debug.log
+stitch_assets
+supabase
+*.md
+.eslintrc.json
+.instruction.md

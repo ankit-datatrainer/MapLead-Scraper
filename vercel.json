@@ -1,0 +1,14 @@
+{
+    "buildCommand": "next build",
+    "installCommand": "npm install",
+    "framework": "nextjs",
+    "nodeVersion": "20.x",
+    "env": {
+        "NEXT_PUBLIC_SITE_URL": "@next-public-site-url",
+        "NEXT_PUBLIC_SUPABASE_URL": "@next-public-supabase-url",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next-public-supabase-anon-key",
+        "SUPABASE_SERVICE_ROLE_KEY": "@supabase-service-role-key"
+    },
+    "outputDirectory": ".next",
+    "crons": []
+}
