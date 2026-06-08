@@ -77,7 +77,7 @@ export function Topbar({ onMobileMenu }: TopbarProps) {
           <Bell size={20} />
         </button>
         <Link
-          href="/"
+          href="/contact"
           aria-label="Help center"
           className="hidden sm:inline-flex p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors"
         >
