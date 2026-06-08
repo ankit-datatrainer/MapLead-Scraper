@@ -78,6 +78,30 @@ export default function LandingPage() {
               text: "No. Export full results, filtered subsets, or selected rows. There's no row cap.",
             },
           },
+          {
+            "@type": "Question",
+            name: "How accurate is the data?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "The data is extracted directly from Google Maps in real-time, ensuring you get the most up-to-date and accurate business information available.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Can I run multiple scrapes at the same time?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes, you can run multiple extraction tasks simultaneously from your dashboard, limited only by your Apify account's concurrency limits.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What if a business doesn't have an email listed?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Google Maps rarely displays email addresses directly. However, we extract the business website URL, which you can use with tools like Hunter.io or Apollo to find contact emails.",
+            },
+          },
         ],
       },
     ],
@@ -290,6 +314,18 @@ export default function LandingPage() {
               {
                 q: "Is the export limited?",
                 a: "No. Export full results, filtered subsets, or selected rows. There's no row cap on the Pro plan.",
+              },
+              {
+                q: "How accurate is the data?",
+                a: "The data is extracted directly from Google Maps in real-time, ensuring you get the most up-to-date and accurate business information available.",
+              },
+              {
+                q: "Can I run multiple scrapes at the same time?",
+                a: "Yes, you can run multiple extraction tasks simultaneously from your dashboard, limited only by your Apify account's concurrency limits.",
+              },
+              {
+                q: "What if a business doesn't have an email listed?",
+                a: "Google Maps rarely displays email addresses directly. However, we extract the business website URL, which you can use with email finder tools to gather contact emails.",
               },
             ].map((faq) => (
               <details
