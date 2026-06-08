@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   PlusCircle,
@@ -41,7 +42,10 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   }
 
   return (
-    <nav
+    <motion.nav
+      initial={{ x: -280, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className="h-full w-[280px] flex flex-col bg-surface-secondary border-r border-border-subtle"
       aria-label="Primary navigation"
     >
@@ -50,14 +54,16 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       </div>
 
       <div className="px-4 py-4">
-        <Link
-          href="/dashboard/new-scrape"
-          onClick={onNavigate}
-          className="w-full bg-primary text-white font-body-sm font-semibold rounded-lg py-2.5 px-4 hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-2 shadow-sm shadow-primary/20"
-        >
-          <Play size={18} fill="currentColor" />
-          Start Scraping
-        </Link>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Link
+            href="/dashboard/new-scrape"
+            onClick={onNavigate}
+            className="w-full bg-primary text-white font-body-sm font-semibold rounded-lg py-2.5 px-4 hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-2 shadow-sm shadow-primary/20"
+          >
+            <Play size={18} fill="currentColor" />
+            Start Scraping
+          </Link>
+        </motion.div>
       </div>
 
       <ul className="flex flex-col px-4 gap-y-1 flex-1 overflow-y-auto custom-scrollbar">
@@ -68,7 +74,11 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               : pathname.startsWith(item.href.split('?')[0]);
           const Icon = item.icon;
           return (
-            <li key={item.href}>
+            <motion.li 
+              key={item.href}
+              whileHover={{ scale: 1.02, x: 4 }}
+              whileTap={{ scale: 0.98 }}
+            >
               <Link
                 href={item.href}
                 onClick={onNavigate}
@@ -83,28 +93,32 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 <Icon size={20} />
                 <span>{item.label}</span>
               </Link>
-            </li>
+            </motion.li>
           );
         })}
       </ul>
 
       <div className="px-4 py-6 border-t border-border-subtle flex flex-col gap-1">
 
-        <Link
-          href="/contact"
-          onClick={onNavigate}
-          className="flex items-center gap-3 px-4 py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors"
-        >
-          <HelpCircle size={20} /> Help Center
-        </Link>
-        <button
+        <motion.div whileHover={{ scale: 1.02, x: 4 }} whileTap={{ scale: 0.98 }}>
+          <Link
+            href="/contact"
+            onClick={onNavigate}
+            className="flex items-center gap-3 px-4 py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors"
+          >
+            <HelpCircle size={20} /> Help Center
+          </Link>
+        </motion.div>
+        <motion.button
           type="button"
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-error transition-colors text-left"
+          whileHover={{ scale: 1.02, x: 4 }} 
+          whileTap={{ scale: 0.98 }}
+          className="flex items-center gap-3 px-4 py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-error transition-colors text-left w-full"
         >
           <LogOut size={20} /> Logout
-        </button>
+        </motion.button>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
