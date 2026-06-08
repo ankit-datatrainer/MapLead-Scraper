@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   Bell,
   HelpCircle,
@@ -45,7 +46,12 @@ export function Topbar({ onMobileMenu }: TopbarProps) {
   }
 
   return (
-    <header className="bg-surface-primary/85 glass-header sticky top-0 z-30 border-b border-border-subtle flex items-center h-16 px-4 lg:px-gutter-desktop gap-4">
+    <motion.header 
+      initial={{ y: -64, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="bg-surface-primary/85 glass-header sticky top-0 z-30 border-b border-border-subtle flex items-center h-16 px-4 lg:px-gutter-desktop gap-4"
+    >
       <button
         type="button"
         aria-label="Open navigation menu"
@@ -140,6 +146,6 @@ export function Topbar({ onMobileMenu }: TopbarProps) {
           )}
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

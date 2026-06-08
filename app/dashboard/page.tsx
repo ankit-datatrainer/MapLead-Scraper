@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   Rocket,
   Users,
@@ -17,22 +18,40 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatNumber, timeAgo } from "@/lib/formatters";
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
+
 export default function DashboardPage() {
   const jobs = useAppStore((s) => s.jobs);
   const settings = useAppStore((s) => s.settings);
   const recentJobs = jobs.slice(0, 4);
 
   const totalLeads = jobs.reduce((sum, j) => sum + j.resultCount, 0);
-  // "Exports" tracking is not yet persisted — reflect actual completed
-  // scrapes for now so the number is honest for brand-new accounts.
   const totalExports = jobs.filter((j) => j.status === "completed").length;
   const hasApiKey = !!settings.apifyApiKey;
   const credits = { used: settings.apifyCreditsUsed || 0, total: hasApiKey ? 100 : 0, daysLeft: 30 };
 
   return (
-    <div className="p-4 lg:p-gutter-desktop max-w-container-max mx-auto w-full">
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="p-4 lg:p-gutter-desktop max-w-container-max mx-auto w-full"
+    >
       {/* Page Header */}
-      <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <motion.div variants={itemVariants} className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-display-lg text-headline-lg lg:text-display-lg text-on-background dark:text-inverse-on-surface font-semibold">
             Dashboard
@@ -48,10 +67,10 @@ export default function DashboardPage() {
           <Rocket size={18} />
           Start New Scraping
         </Link>
-      </div>
+      </motion.div>
 
       {/* Stats grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <StatCard
           label="Total Leads"
           value={formatNumber(totalLeads)}
@@ -91,12 +110,12 @@ export default function DashboardPage() {
           daysLeft={credits.daysLeft}
           hasApiKey={hasApiKey}
         />
-      </div>
+      </motion.div>
 
       {/* Main grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent jobs */}
-        <section className="lg:col-span-2 bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant shadow-ambient flex flex-col">
+        <motion.section variants={itemVariants} className="lg:col-span-2 bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant shadow-ambient flex flex-col">
           <div className="p-6 border-b border-border-subtle dark:border-outline-variant flex items-center justify-between">
             <h2 className="font-headline-md text-headline-md text-on-background dark:text-inverse-on-surface">
               Recent Scrapes
@@ -214,10 +233,10 @@ export default function DashboardPage() {
               </tbody>
             </table>
           </div>
-        </section>
+        </motion.section>
 
         {/* Right column */}
-        <div className="flex flex-col gap-6">
+        <motion.div variants={itemVariants} className="flex flex-col gap-6">
           {/* Tip card */}
           <div className="bg-primary-container text-on-primary-container rounded-xl p-6 shadow-ambient relative overflow-hidden">
             <div className="absolute -right-8 -top-8 w-32 h-32 bg-primary rounded-full opacity-20 blur-2xl pointer-events-none" />
@@ -264,9 +283,9 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
