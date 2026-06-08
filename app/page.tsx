@@ -16,6 +16,8 @@ import { Footer } from "@/components/layout/footer";
 import { MarketingNav } from "@/components/layout/marketing-nav";
 import { HeroButtons } from "@/components/hero-buttons";
 import { APP_DESCRIPTION, APP_NAME, PLANS } from "@/lib/constants";
+import { HeroTutorial } from "@/components/hero-tutorial";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
   title: `${APP_NAME} — Scrape Google Maps Leads in Seconds`,
@@ -134,105 +136,76 @@ export default function LandingPage() {
         </p>
         <HeroButtons />
 
-        {/* Mock dashboard preview */}
-        <div className="w-full max-w-5xl mt-16 rounded-xl overflow-hidden border border-border-subtle dark:border-outline-variant shadow-sm bg-surface-primary dark:bg-dark-surface relative">
-          <div className="h-12 bg-surface-secondary dark:bg-inverse-surface border-b border-border-subtle dark:border-outline-variant flex items-center px-4 gap-2">
-            <div className="w-3 h-3 rounded-full bg-error" />
-            <div className="w-3 h-3 rounded-full bg-tertiary-fixed-dim" />
-            <div className="w-3 h-3 rounded-full bg-secondary-fixed-dim" />
-          </div>
-          <div className="bg-surface-container-low dark:bg-inverse-surface/30 p-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { label: "Total Leads", value: "24,592", trend: "+12%" },
-              { label: "Data Exports", value: "143", trend: "Last 2h ago" },
-              { label: "Apify Credits", value: "$42.50", trend: "of $100" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant p-6 shadow-sm"
-              >
-                <span className="font-mono text-label-mono uppercase text-outline">
-                  {stat.label}
-                </span>
-                <div className="font-display-lg text-headline-lg font-bold mt-3 text-on-surface dark:text-inverse-on-surface">
-                  {stat.value}
-                </div>
-                <div className="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                  {stat.trend}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Animated Tutorial */}
+        <HeroTutorial />
       </header>
 
       {/* Features */}
-      <section
-        id="features"
-        className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24"
-      >
-        <div className="text-center mb-12">
-          <span className="font-mono text-label-mono uppercase tracking-wider text-primary">
-            Features
-          </span>
-          <h2 className="font-headline-lg text-headline-lg md:text-headline-lg font-semibold text-on-surface dark:text-inverse-on-surface mt-2">
-            Everything you need to find leads fast
-          </h2>
-          <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl mx-auto">
-            Built on the Apify infrastructure. Bring your own API key and own
-            your data — no middlemen.
-          </p>
-        </div>
+      <section id="features">
+        <ScrollReveal className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
+          <div className="text-center mb-12">
+            <span className="font-mono text-label-mono uppercase tracking-wider text-primary">
+              Features
+            </span>
+            <h2 className="font-headline-lg text-headline-lg md:text-headline-lg font-semibold text-on-surface dark:text-inverse-on-surface mt-2">
+              Everything you need to find leads fast
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl mx-auto">
+              Built on the Apify infrastructure. Bring your own API key and own
+              your data — no middlemen.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-desktop">
-          {[
-            {
-              icon: <MapIcon size={20} />,
-              title: "Geo-targeted scraping",
-              text: "Search by city, state, or zip code with adjustable radius. See your area on a map preview.",
-            },
-            {
-              icon: <Filter size={20} />,
-              title: "Advanced filters",
-              text: "Filter by rating, review count, phone, website. Only keep the leads you'd actually call.",
-            },
-            {
-              icon: <Download size={20} />,
-              title: "Excel export in-browser",
-              text: "Export filtered, selected, or full results as XLSX or CSV with formatted headers.",
-            },
-            {
-              icon: <ShieldCheck size={20} />,
-              title: "Bring your own API key",
-              text: "Your Apify token stays on your device. We never store credentials on our servers.",
-            },
-            {
-              icon: <Zap size={20} />,
-              title: "Live progress",
-              text: "Watch your scrape run in real time, with progress bars, partial results, and pause/cancel controls.",
-            },
-            {
-              icon: <Sparkles size={20} />,
-              title: "Saved searches",
-              text: "Save frequent presets and re-run them in one click. Perfect for recurring outreach campaigns.",
-            },
-          ].map((feat) => (
-            <div
-              key={feat.title}
-              className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant p-6 shadow-ambient hover:shadow-ambient-hover transition-shadow"
-            >
-              <div className="w-10 h-10 rounded-lg bg-surface-container-low dark:bg-inverse-surface flex items-center justify-center text-primary mb-4">
-                {feat.icon}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-desktop">
+            {[
+              {
+                icon: <MapIcon size={20} />,
+                title: "Geo-targeted scraping",
+                text: "Search by city, state, or zip code with adjustable radius. See your area on a map preview.",
+              },
+              {
+                icon: <Filter size={20} />,
+                title: "Advanced filters",
+                text: "Filter by rating, review count, phone, website. Only keep the leads you'd actually call.",
+              },
+              {
+                icon: <Download size={20} />,
+                title: "Excel export in-browser",
+                text: "Export filtered, selected, or full results as XLSX or CSV with formatted headers.",
+              },
+              {
+                icon: <ShieldCheck size={20} />,
+                title: "Bring your own API key",
+                text: "Your Apify token stays on your device. We never store credentials on our servers.",
+              },
+              {
+                icon: <Zap size={20} />,
+                title: "Live progress",
+                text: "Watch your scrape run in real time, with progress bars, partial results, and pause/cancel controls.",
+              },
+              {
+                icon: <Sparkles size={20} />,
+                title: "Saved searches",
+                text: "Save frequent presets and re-run them in one click. Perfect for recurring outreach campaigns.",
+              },
+            ].map((feat) => (
+              <div
+                key={feat.title}
+                className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant p-6 shadow-ambient hover:shadow-ambient-hover transition-shadow"
+              >
+                <div className="w-10 h-10 rounded-lg bg-surface-container-low dark:bg-inverse-surface flex items-center justify-center text-primary mb-4">
+                  {feat.icon}
+                </div>
+                <h3 className="font-headline-md text-[18px] font-semibold text-on-surface dark:text-inverse-on-surface mb-2">
+                  {feat.title}
+                </h3>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">
+                  {feat.text}
+                </p>
               </div>
-              <h3 className="font-headline-md text-[18px] font-semibold text-on-surface dark:text-inverse-on-surface mb-2">
-                {feat.title}
-              </h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                {feat.text}
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* Workflow */}
@@ -240,7 +213,7 @@ export default function LandingPage() {
         id="workflow"
         className="bg-surface-primary dark:bg-dark-surface border-y border-border-subtle dark:border-outline-variant"
       >
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
+        <ScrollReveal className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
           <div className="text-center mb-12">
             <span className="font-mono text-label-mono uppercase tracking-wider text-primary">
               Workflow
@@ -283,7 +256,7 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
 
@@ -292,7 +265,7 @@ export default function LandingPage() {
         id="faq"
         className="bg-surface-primary dark:bg-dark-surface border-y border-border-subtle dark:border-outline-variant"
       >
-        <div className="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
+        <ScrollReveal className="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
           <div className="text-center mb-12">
             <span className="font-mono text-label-mono uppercase tracking-wider text-primary">
               FAQ
@@ -344,12 +317,12 @@ export default function LandingPage() {
               </details>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Final CTA */}
       <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
-        <div className="bg-primary text-on-primary rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
+        <ScrollReveal className="bg-primary text-on-primary rounded-2xl p-10 md:p-16 text-center relative overflow-hidden">
           <div className="absolute -right-12 -top-12 w-48 h-48 bg-primary-container rounded-full opacity-30 blur-3xl pointer-events-none" />
           <Star size={32} className="mx-auto mb-3 text-on-primary opacity-80" />
           <h2 className="font-headline-lg text-headline-lg font-semibold mb-3 text-balance">
@@ -366,7 +339,7 @@ export default function LandingPage() {
             Create your free account
             <ArrowRight size={20} />
           </Link>
-        </div>
+        </ScrollReveal>
       </section>
 
       <Footer />
