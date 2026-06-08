@@ -201,13 +201,25 @@ export default function SavedSearchesPage() {
                   </div>
                 </div>
                 <Button
-                  variant="outline"
+                  variant="primary"
                   className="w-full"
                   onClick={() => {
-                    info("Preset queued", `Running "${preset.name}"…`);
-                    router.push(
-                      `/dashboard/new-scrape?preset=${encodeURIComponent(preset.id)}`,
-                    );
+                    info("Preset loaded", `Reviewing "${preset.name}"…`);
+                    localStorage.setItem("maplead_draft_scrape", JSON.stringify({
+                      step: 4,
+                      form: {
+                        keyword: preset.keyword,
+                        location: preset.location,
+                        category: preset.category,
+                        radius: preset.radius,
+                        hasPhone: preset.filters.hasPhone,
+                        hasWebsite: preset.filters.hasWebsite,
+                        minRating: preset.filters.minRating,
+                        minReviews: preset.filters.minReviews === null ? "" : preset.filters.minReviews,
+                        resultLimit: preset.resultLimit,
+                      }
+                    }));
+                    router.push("/dashboard/new-scrape");
                   }}
                 >
                   <Play size={16} fill="currentColor" />

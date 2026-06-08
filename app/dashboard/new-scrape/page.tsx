@@ -60,7 +60,7 @@ type Form = {
 export default function NewScrapePage() {
   const router = useRouter();
   const { success, error: errorToast, info } = useToast();
-  const { settings, addJob, updateJob, addSavedSearch, setApiKey } = useAppStore();
+  const { settings, addJob, updateJob, addSavedSearch, setApiKey, updateSettings } = useAppStore();
   const [step, setStep] = useState(1);
   const [showKey, setShowKey] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -82,6 +82,8 @@ export default function NewScrapePage() {
     presetName: "",
   });
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     const saved = localStorage.getItem("maplead_draft_scrape");
     if (saved) {
@@ -91,11 +93,14 @@ export default function NewScrapePage() {
         if (parsed.form) setForm((f) => ({ ...f, ...parsed.form }));
       } catch (e) {}
     }
+    setIsLoaded(true);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("maplead_draft_scrape", JSON.stringify({ step, form }));
-  }, [step, form]);
+    if (isLoaded) {
+      localStorage.setItem("maplead_draft_scrape", JSON.stringify({ step, form }));
+    }
+  }, [step, form, isLoaded]);
 
   const setField = <K extends keyof Form>(key: K, value: Form[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -190,6 +195,9 @@ export default function NewScrapePage() {
         resultCount: leads.length,
         results: leads,
         completedAt: new Date().toISOString(),
+      });
+      updateSettings({
+        apifyCreditsUsed: (settings.apifyCreditsUsed || 0) + (leads.length * ESTIMATED_COST_PER_RESULT)
       });
       success("Scrape complete", `${leads.length} leads extracted.`);
       localStorage.removeItem("maplead_draft_scrape");

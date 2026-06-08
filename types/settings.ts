@@ -3,6 +3,7 @@ export type ExportFormat = "xlsx" | "csv";
 
 export type Settings = {
   apifyApiKey: string;
+  apifyCreditsUsed: number;
   defaultRadius: number;
   defaultResultLimit: number;
   theme: Theme;
@@ -25,6 +26,7 @@ export type Settings = {
 
 export const DEFAULT_SETTINGS: Settings = {
   apifyApiKey: "",
+  apifyCreditsUsed: 0,
   defaultRadius: 10,
   defaultResultLimit: 1000,
   theme: "system",

@@ -27,7 +27,7 @@ export default function DashboardPage() {
   // scrapes for now so the number is honest for brand-new accounts.
   const totalExports = jobs.filter((j) => j.status === "completed").length;
   const hasApiKey = !!settings.apifyApiKey;
-  const credits = { used: 0, total: hasApiKey ? 100 : 0, daysLeft: 30 };
+  const credits = { used: settings.apifyCreditsUsed || 0, total: hasApiKey ? 100 : 0, daysLeft: 30 };
 
   return (
     <div className="p-4 lg:p-gutter-desktop max-w-container-max mx-auto w-full">
