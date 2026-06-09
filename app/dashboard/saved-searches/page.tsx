@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -56,7 +57,11 @@ export default function SavedSearchesPage() {
   return (
     <div className="p-margin-mobile lg:p-margin-desktop max-w-container-max mx-auto w-full">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4"
+      >
         <div>
           <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-inverse-on-surface font-semibold">
             Saved Searches
@@ -82,7 +87,7 @@ export default function SavedSearchesPage() {
             <span className="hidden sm:inline">Create Preset</span>
           </Link>
         </div>
-      </div>
+      </motion.div>
 
       {/* Grid */}
       {filtered.length === 0 ? (
@@ -106,7 +111,14 @@ export default function SavedSearchesPage() {
           }
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter-desktop">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.05 } }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter-desktop"
+        >
           {filtered.map((preset) => {
             const Icon = ICON_MAP[preset.iconKey ?? "Briefcase"] ?? Briefcase;
             const tags = [
@@ -119,7 +131,11 @@ export default function SavedSearchesPage() {
               preset.filters.hasWebsite ? "Has Website" : null,
             ].filter(Boolean) as string[];
             return (
-              <article
+              <motion.article
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
                 key={preset.id}
                 className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant p-6 shadow-ambient hover:shadow-ambient-hover transition-all duration-300 flex flex-col"
               >
@@ -225,10 +241,10 @@ export default function SavedSearchesPage() {
                   <Play size={16} fill="currentColor" />
                   Run Extraction
                 </Button>
-              </article>
+              </motion.article>
             );
           })}
-        </div>
+        </motion.div>
       )}
     </div>
   );

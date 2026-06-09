@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import {
   User,
@@ -49,17 +50,26 @@ function SettingsContent() {
   return (
     <div className="p-margin-mobile lg:p-margin-desktop max-w-container-max mx-auto w-full">
       {/* Header */}
-      <div className="mb-6">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6"
+      >
         <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-semibold text-on-surface dark:text-inverse-on-surface">
           Settings
         </h1>
         <p className="font-body-md text-body-md text-on-surface-variant mt-1">
           Manage your account, API access, and preferences.
         </p>
-      </div>
+      </motion.div>
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as TabKey)}>
-        <TabsList className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <TabsList className="mb-8">
           <TabsTrigger value="account" icon={<User size={16} />}>
             Account
           </TabsTrigger>
@@ -76,6 +86,7 @@ function SettingsContent() {
             Privacy
           </TabsTrigger>
         </TabsList>
+        </motion.div>
 
         <TabsContent value="account">
           <AccountTab />
@@ -119,7 +130,11 @@ function SectionCard({
   footer?: React.ReactNode;
 }) {
   return (
-    <section className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant shadow-ambient mb-6">
+    <motion.section 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant shadow-ambient mb-6"
+    >
       <header className="p-6 border-b border-border-subtle dark:border-outline-variant">
         <h2 className="font-headline-md text-[18px] font-semibold text-on-surface dark:text-inverse-on-surface">
           {title}
@@ -136,7 +151,7 @@ function SectionCard({
           {footer}
         </footer>
       )}
-    </section>
+    </motion.section>
   );
 }
 

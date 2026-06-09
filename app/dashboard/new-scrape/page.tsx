@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
   MapPin,
@@ -233,32 +233,42 @@ export default function NewScrapePage() {
 
         {/* Form container */}
         <div className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant shadow-ambient p-6 md:p-8 min-h-[500px] relative overflow-hidden">
-          {step === 1 && (
-            <StepTarget form={form} setField={setField} />
-          )}
-          {step === 2 && (
-            <StepFilters form={form} setField={setField} />
-          )}
-          {step === 3 && (
-            <StepSettings
-              form={form}
-              setField={setField}
-              showKey={showKey}
-              setShowKey={setShowKey}
-              estimatedCost={estimatedCost}
-            />
-          )}
-          {step === 4 && (
-            <StepLaunch
-              form={form}
-              setField={setField}
-              estimatedCost={estimatedCost}
-              submitting={submitting}
-              onLaunch={launch}
-              progress={scrapeProgress}
-              count={scrapeCount}
-            />
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {step === 1 && (
+                <StepTarget form={form} setField={setField} />
+              )}
+              {step === 2 && (
+                <StepFilters form={form} setField={setField} />
+              )}
+              {step === 3 && (
+                <StepSettings
+                  form={form}
+                  setField={setField}
+                  showKey={showKey}
+                  setShowKey={setShowKey}
+                  estimatedCost={estimatedCost}
+                />
+              )}
+              {step === 4 && (
+                <StepLaunch
+                  form={form}
+                  setField={setField}
+                  estimatedCost={estimatedCost}
+                  submitting={submitting}
+                  onLaunch={launch}
+                  progress={scrapeProgress}
+                  count={scrapeCount}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Footer */}
@@ -334,7 +344,7 @@ function StepTarget({
   setField: <K extends keyof Form>(k: K, v: Form[K]) => void;
 }) {
   return (
-    <div className="animate-fade-in">
+    <div className="w-full">
       <h2 className="font-headline-md text-headline-md text-on-background dark:text-inverse-on-surface mb-6">
         Target Parameters
       </h2>
@@ -431,7 +441,7 @@ function StepFilters({
 }) {
   const ratingOptions: (number | null)[] = [null, 3, 4, 4.5];
   return (
-    <div className="animate-fade-in">
+    <div className="w-full">
       <h2 className="font-headline-md text-headline-md text-on-background dark:text-inverse-on-surface mb-2">
         Advanced Filters
       </h2>
@@ -547,7 +557,7 @@ function StepSettings({
   estimatedCost: number;
 }) {
   return (
-    <div className="animate-fade-in">
+    <div className="w-full">
       <h2 className="font-headline-md text-headline-md text-on-background dark:text-inverse-on-surface mb-6">
         Extraction Settings
       </h2>
@@ -631,7 +641,7 @@ function StepLaunch({
 }) {
   if (submitting) {
     return (
-      <div className="animate-fade-in flex flex-col items-center justify-center py-12">
+      <div className="flex flex-col items-center justify-center py-12 w-full">
         <div className="relative w-48 h-48 flex items-center justify-center mb-8">
           <svg className="w-full h-full transform -rotate-90">
             <circle cx="96" cy="96" r="88" className="stroke-surface-container-low dark:stroke-inverse-surface/30 fill-none" strokeWidth="12" />
@@ -702,7 +712,7 @@ function StepLaunch({
   ];
 
   return (
-    <div className="animate-fade-in text-center py-4">
+    <div className="text-center py-4 w-full">
       <div className="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mx-auto mb-6">
         <CheckCircle2 size={28} />
       </div>

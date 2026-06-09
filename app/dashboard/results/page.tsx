@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -207,7 +208,11 @@ export default function ResultsLibraryPage() {
   return (
     <div className="p-margin-mobile lg:p-margin-desktop max-w-container-max mx-auto w-full">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6"
+      >
         <div>
           <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-semibold text-on-surface dark:text-inverse-on-surface">
             Results Library
@@ -231,7 +236,7 @@ export default function ResultsLibraryPage() {
             <Plus size={16} /> New scrape
           </Link>
         </div>
-      </div>
+      </motion.div>
 
       {/* Card */}
       <div className="bg-surface-primary dark:bg-dark-surface rounded-xl border border-border-subtle dark:border-outline-variant shadow-ambient overflow-hidden">
@@ -290,7 +295,11 @@ export default function ResultsLibraryPage() {
 
         {/* Table */}
         {filtered.length === 0 ? (
-          <div className="p-10">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="p-10"
+          >
             <EmptyState
               icon={<Search size={20} />}
               title={
@@ -315,7 +324,7 @@ export default function ResultsLibraryPage() {
                 )
               }
             />
-          </div>
+          </motion.div>
         ) : (
           <div className="overflow-x-auto w-full">
             <table className="w-full text-left border-collapse whitespace-nowrap">
@@ -360,13 +369,24 @@ export default function ResultsLibraryPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-subtle dark:divide-outline-variant">
+              <motion.tbody 
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: { transition: { staggerChildren: 0.05 } }
+                }}
+                className="divide-y divide-border-subtle dark:divide-outline-variant"
+              >
                 {visible.map((job) => {
                   const Icon =
                     CATEGORY_ICONS[job.category ?? ""] ?? Briefcase;
                   const failed = job.status === "failed";
                   return (
-                    <tr
+                    <motion.tr
+                      variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        visible: { opacity: 1, y: 0 }
+                      }}
                       key={job.id}
                       className="group hover:bg-surface-container-low dark:hover:bg-inverse-surface/30 transition-colors"
                     >
@@ -435,10 +455,10 @@ export default function ResultsLibraryPage() {
                           onDelete={() => setConfirmDelete(job)}
                         />
                       </td>
-                    </tr>
+                    </motion.tr>
                   );
                 })}
-              </tbody>
+              </motion.tbody>
             </table>
           </div>
         )}
